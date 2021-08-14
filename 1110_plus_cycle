@@ -1,0 +1,25 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;//이름공간 선언
+
+int main() {
+  int goal,n,count;
+  count = 0;
+  cin>>n;
+  goal = n;
+  while(true){
+    if(n>=10){
+      n = 10*(n%10)+(n/10+n%10)%10;
+    }
+    else{
+      n = 10*(n%10)+n;
+    }
+    count += 1;
+    if(n == goal){
+      break;
+    }
+  }
+  cout<<count<<endl;
+  return 0;
+}
