@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <algorithm>
+using namespace std;//이름공간 선언
+
+int main() {
+  //변수 선언
+  int a,b,c,mul;
+  int arr[10] = {0};
+  string f;
+  //입력
+  cin>>a>>b>>c;
+  mul = a*b*c;
+  //각 숫자가 몇번 쓰였는가?
+  string str;
+  str = to_string(mul);
+  for(int i=0;i<str.size();i++){
+    f = str[i];
+    int st_int = stoi(f);
+    arr[st_int] += 1;
+  }
+  //출력
+  for(int i=0;i<10;i++){
+    cout<<arr[i]<<endl;
+  }
+  
+  return 0;
+}
