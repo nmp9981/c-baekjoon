@@ -1,0 +1,17 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <algorithm>
+using namespace std;//이름공간 선언
+
+int main() {
+  int n;
+  cin>>n;
+
+  if(n%2 == 0){
+    cout<<"CY"<<endl;
+  }else{
+    cout<<"SK"<<endl;
+  }
+  return 0;
+}
