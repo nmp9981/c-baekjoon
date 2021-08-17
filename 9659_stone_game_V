@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+
+using namespace std;//이름공간 선언
+
+int main() {
+  //입력
+  long long n;
+  cin >>n;
+  
+  //초기행렬
+  if(n % 2 == 0){
+    cout<<"CY"<<endl;
+  }else{
+    cout<<"SK"<<endl;
+  }
+
+  return 0;
+}
