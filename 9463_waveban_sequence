@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+
+using namespace std;//이름공간 선언
+
+int main() {
+  
+  //점화식
+  long long p[101] = {1,1,1,1};
+
+  for(int i=4;i<101;i++){
+    p[i] = p[i-2] + p[i-3];
+  }
+
+  //입력
+  int t;
+  cin>>t;
+  for(int j = 0;j<t;j++){
+    int n;
+    cin>>n;
+    cout<<p[n]<<endl;
+  }
+  return 0;
+}
