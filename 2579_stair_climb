@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+
+using namespace std;//이름공간 선언
+
+int main() {
+  
+  //입력
+  int n;
+  cin>>n;
+  
+  //계단에 적혀있는 수
+  int li[n];
+  for(int i=0;i<n;i++){
+    cin>>li[i];
+  }
+  
+  //점화식
+  int p[n];
+  p[0] = li[0];
+  p[1] = li[0] + li[1];
+  p[2] = li[2] + max(li[0],li[1]);
+  for(int i=3;i<n;i++){
+    p[i] = li[i] + max(p[i-3] + li[i-1],p[i-2]);
+  }
+
+  //출력
+  cout<<p[n-1]<<endl;
+  return 0;
+}
