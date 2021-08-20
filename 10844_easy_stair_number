@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+
+using namespace std;//이름공간 선언
+
+int main() {
+  
+  //입력
+  int n;
+  cin>>n;
+  
+  //계단수
+  int p[n][10];//행 : 자릿수, 열 : 마지막에 오는 수
+  int mod = 1000000000;
+  //초기값
+  p[0][0] = 0;
+  for(int i=1;i<10;i++){
+    p[0][i] = 1;
+  }
+  //점화식
+  for(int i=1;i<n;i++){
+    for(int j=0;j<10;j++){
+      if(j==0){
+        p[i][j] = p[i-1][1]%mod;
+      }else if(j==9){
+        p[i][j] = p[i-1][8]%mod;
+      }else{
+        p[i][j] = (p[i-1][j-1] + p[i-1][j+1])%mod;
+      }
+    }
+  }
+  //합구하기(마지막에 오는 자릿수0~9의합)
+  int sum = 0;
+  for(int i=0;i<10;i++){
+    sum = (sum+p[n-1][i])%mod;
+  }
+  //출력
+  cout<<sum%mod<<endl;
+  return 0;
+}
