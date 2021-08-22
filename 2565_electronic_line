@@ -1,0 +1,49 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+
+using namespace std;//이름공간 선언
+int LIS(vector<vector<int>> li,int n){
+  //초기화
+  int p[n];
+  for(int i=0;i<n;i++){
+    p[i] = 1;
+  }
+  
+  //점화식(오름차순,내림차순)
+  for(int i=1;i<n;i++){
+    for(int j=0;j<i;j++){
+      if(li[i][1]>li[j][1]){
+        p[i] = max(p[j]+1,p[i]);
+      }
+    }
+  }
+  //결과
+  int maxi = 0;
+  for(int i=0;i<n;i++){
+    //q는 내림차순이므로 원래대로
+    if(maxi<p[i]){
+      maxi = p[i];
+    }
+  }
+  return maxi;
+}
+int main() {
+  //입력
+  int n;
+  cin>>n;
+  vector<vector<int>> li(n,vector<int>(2,0));
+  for(int i=0;i<n;i++){
+    cin>>li[i][0]>>li[i][1];
+  }
+  //0번열을 기준으로 오름차순 정렬
+  sort(li.begin(),li.end());
+  //LIS결과
+  int r;
+  r = LIS(li,n);//1번열의 LIS
+  cout<<n-r<<endl;
+  return 0;
+}
