@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int lis(int n,int li[]){
+  int p[n];
+  int q[n];
+  //초기화
+  for(int i=0;i<n;i++){
+    p[i] = 1;
+  }
+  for(int i=0;i<n;i++){
+    q[i] = 1;
+  }
+
+  //역리스트
+  int re[n];
+  for(int i=0;i<n;i++){
+    re[i] = li[n-1-i];
+  }
+
+  //LIS(오름차순, 내림차순)
+  for(int i=1;i<n;i++){
+    for(int j=0;j<i;j++){
+      if(li[j]<li[i]){
+        p[i] = max(p[i],p[j]+1);
+      }if(re[j]<re[i]){
+        q[i] = max(q[i],q[j]+1);
+      }
+    }
+  }
+  //최대길이
+  int maxi = 0;
+  //q는 내림차순
+  for(int i=0;i<n;i++){
+    if(maxi<p[i]+q[n-1-i]-1){
+      maxi = p[i]+q[n-1-i]-1;
+    }
+  }
+  return maxi;
+}
+
+int main() {
+  //입력
+  int n;
+  cin>>n;
+  int li[n];
+  for(int i=0;i<n;i++){
+    cin>>li[i];
+  }
+  //LIS
+  int result;
+  result = lis(n,li);
+
+  //출력
+  cout<<result<<endl;
+  
+  return 0;
+}
