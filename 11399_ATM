@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  //입력
+  int n;
+  cin>>n;
+  vector<int> li;
+  for(int i=0;i<n;i++){
+    int x;
+    cin>>x;
+    li.push_back(x);
+  }
+  //정렬
+  sort(li.begin(),li.end());
+  //ATM
+  int p[n];
+  int sum = 0;
+  for(int i=0;i<n;i++){
+    sum += li[i];
+    p[i] = sum;
+  }
+  //출력
+  int result = 0;
+  for(int i=0;i<n;i++){
+    result += p[i];
+  }
+  cout<<result<<endl;
+  return 0;
+}
