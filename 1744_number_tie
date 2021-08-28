@@ -1,0 +1,70 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int n;
+  cin>>n;
+  //리스트 생성
+  vector<int> p;
+  for(int i=0;i<n;i++){
+    int x;
+    cin>>x;
+    p.push_back(x);
+  }
+
+  sort(p.begin(),p.end());
+  //플러스, 마이너스 리스트 생성
+  vector<int> plus;
+  vector<int> minus;
+  int one = 0;
+  for(int i=0;i<n;i++){
+    if(p[i] == 1){
+      one += 1;//1은 더하는게 이득
+    }
+    else if(p[i] > 0){
+      plus.push_back(p[i]);
+    }
+    else{
+      minus.push_back(p[i]);
+    }
+  }
+  
+  //리스트 순회(minus)
+  int total = 0;
+  if(minus.size()>=1){
+    for(int i=0;i<minus.size()-1;i+=2){
+      total += minus[i]*minus[i+1];
+    }
+  }
+  
+  //리스트 순회(plus)
+  for(int i=plus.size()-1;i>=1;i-=2){
+    total += plus[i]*plus[i-1];
+  }
+  
+  //리스트의 길이가 홀수일 경우 맨처음은 더해줌
+  if(plus.size() %2 ==1){
+    total += plus[0];
+  }
+  
+  //리스트의 길이가 홀수일 경우
+  if(minus.size() %2 ==1){
+    total += minus[minus.size()-1];
+  }
+  
+  //결과
+  cout<<total+one<<endl;
+}
