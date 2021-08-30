@@ -1,0 +1,65 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+//3*3뒤집기
+void reverse(int x, int y, int m1[50][50]){
+  for(int i=x;i<x+3;i++){
+    for(int j=y;j<y+3;j++){
+      m1[i][j] = 1-m1[i][j];
+    }
+  }
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  int n,k;
+  cin>>n>>k;
+  int m1[50][50];
+  int m2[50][50];
+  //입력
+  for(int i=0;i<n;i++){
+    for(int j=0;j<k;j++){
+      scanf("%1d",&m1[i][j]);
+    }
+  }
+  //정답
+  for(int i=0;i<n;i++){
+    for(int j=0;j<k;j++){
+      scanf("%1d",&m2[i][j]);
+    }
+  }
+
+  //뒤집기(3*3뒤집기만 가능)
+  int count = 0;
+  for(int i=0;i<n-2;i++){
+    for(int j=0;j<k-2;j++){
+      if(m1[i][j] != m2[i][j]){
+        reverse(i,j,m1);
+        count += 1;
+      }
+    }
+  }
+
+  //리스트를 순회(다른게 있으면 오답)
+  for(int i=0;i<n;i++){
+    for(int j=0;j<k;j++){
+      if(m1[i][j] != m2[i][j]){
+        cout<<-1<<endl;
+        return 0;
+      }
+    }
+  }
+  //출력
+  cout<<count<<endl;
+  return 0;
+}
