@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int n,k;
+  cin>>n>>k;
+  deque<int> jose;
+  for(int i=1;i<=n;i++){
+    jose.push_back(i);
+  }
+
+  vector<int> result;
+  while(!jose.empty()){
+    int count = 0;
+    for(int i=0;i<k;i++){
+      jose.push_back(jose.front());//맨앞 원소 넣고
+      jose.pop_front();//기존 맨앞 원소 빼기
+    }
+    //k번 진행 후,맨뒤원소는 제거, 결과수열에 저장
+    result.push_back(jose.back());
+    jose.pop_back();
+  }
+
+  //결과 출력
+  cout<<"<";
+  for(int i=0;i<n-1;i++){
+    cout<<result[i]<<", ";
+  }
+  cout<<result[n-1]<<">";
+
+  return 0;
+}
