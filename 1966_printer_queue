@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int max(vector<int> x){
+  int maxi = 0;
+  for(int i=0;i<x.size();i++){
+    if(x[i]>maxi){
+      maxi = x[i];
+    }
+  }
+  return maxi;
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int t;
+  cin>>t;
+  for(int i=0;i<t;i++){
+    //문서 입력
+    int n,k;
+    cin>>n>>k;
+    deque<int> docu;
+    deque<int> point;
+    for(int j=0;j<n;j++){
+      int x;
+      cin>>x;
+      docu.push_back(x);
+      point.push_back(0);
+    }
+
+    //문서 인쇄 순서
+    point[k] = 1;//뽑아야하는 문서
+    int count = 1;//몇번째로 뽑는가?
+    while(true){
+      if(docu[0]==*std::max_element(docu.begin(),docu.end())){
+        if(point[0]==1){
+          cout<<count<<endl;
+          break;
+        }else{
+          docu.pop_front();
+          point.pop_front();
+          count += 1;
+        }
+      }else{
+        docu.push_back(docu[0]);
+        point.push_back(point[0]);
+        docu.pop_front();
+        point.pop_front();
+      }
+    }
+    
+  }
+  return 0;
+}
