@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+long long c[2000][2000];
+void comb(int m){
+  //초기화
+  for(int i=0;i<2000;i++){
+    for(int j=0;j<2000;j++){
+      c[i][j] = 0;
+    }
+  }
+  //조합
+  c[0][0] = 1;
+  c[1][0] = 1;
+  c[1][1] = 1;
+  for(int i=2;i<2000;i++){
+    for(int j=0;j<=i;j++){
+      if(j==0 || j==i){
+        c[i][j] = 1;
+      }else{
+        c[i][j] = (c[i-1][j] + c[i-1][j-1])%m;
+      }
+    }
+  }
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int n,m;
+  cin>>n>>m;
+
+  deque<int> d;
+  for(int i=1;i<=n;i++){
+    d.push_back(i);
+  }
+
+  deque<int> p;
+  for(int i=0;i<m;i++){
+    int x;
+    cin>>x;
+    p.push_back(x);
+  }
+
+
+  //수뽑기
+  int count = 0;
+  int index = 0;
+  while(index < m){
+    //x의 위치
+    int idx = 0;
+    for(int i=0;i<d.size();i++){
+      if(p[index]==d[i]){
+        idx = i;
+      }
+    }
+    int move = d.size()/2;//최대 이동값
+    
+    //2번이 더이득
+    if(idx<=move){
+      while(d[0]!=p[index]){
+        d.push_back(d[0]);
+        d.pop_front();
+        count += 1;
+      }
+    }else{//3번이 더 이득
+      while(d[0]!=p[index]){
+        d.push_front(d[d.size()-1]);
+        d.pop_back();
+        count += 1;
+      }
+    }
+    d.pop_front();//맨앞 뽑기
+    index += 1;
+    
+  }
+
+  //결과
+  cout<<count<<endl;
+
+  return 0;
+}
