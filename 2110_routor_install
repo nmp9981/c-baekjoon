@@ -1,0 +1,64 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int dist(int x, vector<int> wifi){
+  int house = wifi[0];
+  int count = 1;//맨 첫 지점에 1개설치
+  //모든집 순회
+  for(int i=1;i<wifi.size();i++){
+    //다음 wifi지점을 지나면
+    if(house+x <= wifi[i]){
+      house = wifi[i];
+      count ++;
+    }
+  }
+  return count;
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  ios::sync_with_stdio(false);
+  
+  //입력
+  int n,c;
+  cin>>n>>c;
+
+  vector<int> wifi;
+  for(int i=0;i<n;i++){
+    int x;
+    cin>>x;
+    wifi.push_back(x);
+  }
+
+  //정렬
+  sort(wifi.begin(),wifi.end());
+  //이분탐색
+  int start = 1;
+  int end = wifi[n-1];
+  int mid;
+  while(start<=end){
+    mid = (start+end)/2;//간격
+    //많이 설치 : 간격이 좁다
+    if(dist(mid,wifi) >= c){
+      start = mid + 1;
+    }else{
+      end = mid - 1;
+    }
+  }
+
+  //결과
+  cout<<end<<endl;
+  return 0;
+}
