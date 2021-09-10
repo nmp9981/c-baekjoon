@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int map[25][25];
+int cnt;
+int n,m;
+int dx[] = {-1,1,0,0};
+int dy[] = {0,0,-1,1};
+
+//dfs
+bool dfs(int x,int y){
+  //범위밖
+  if(x<0 || x>=n || y<0 || y>=n){
+    return false;
+  }
+  //1->0
+  if(map[x][y] == 1){//아직 미방문
+    map[x][y] = 0;
+    cnt += 1;
+    for(int i=0;i<4;i++){
+      int nx = x + dx[i];
+      int ny = y + dy[i];
+      dfs(nx,ny);
+    }
+  }
+  return true;
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  ios::sync_with_stdio(false);
+  
+  //입력
+  cin>>n;
+  
+  //지도입력
+  string line;
+  for(int i=0;i<n;i++){
+    cin>>line;
+    for(int j=0;j<n;j++){
+      map[i][j] = line[j]-'0';
+    }
+  }
+  
+  //지도 순회
+  vector<int> apart;
+  cnt = 0;
+  for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+      if(dfs(i,j)==true && cnt>0){
+        apart.push_back(cnt);
+        cnt = 0;
+      }
+    }
+  }
+  
+  //출력
+  cout<<apart.size()<<"\n";//총 단지수
+  sort(apart.begin(),apart.end());
+  for(int i=0;i<apart.size();i++){
+    cout<<apart[i]<<"\n";
+  }
+  return 0;
+}
