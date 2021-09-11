@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int map[50][50];
+int cnt;
+int n,m;
+int dx[] = {-1,1,0,0};
+int dy[] = {0,0,-1,1};
+
+bool dfs(int x,int y){
+  //범위를 넘는다면 탐색종료
+  if(x<0 || x>=n || y<0 || y>=m){
+    return false;
+  }
+
+  //k->0
+  if(map[x][y] == 1){//아직 미방문
+    map[x][y] = 0;
+    cnt ++;
+    for(int i=0;i<4;i++){
+      int nx = x + dx[i];
+      int ny = y + dy[i];
+      dfs(nx,ny);
+    }
+  }
+  return true;
+}
+
+int main(){
+  //입력
+  int t,k;
+  cin>>t;
+  for(int num=0;num<t;num++){
+    cin>>m>>n>>k;
+    //지도 만들기(인접 행렬) 및 초기화
+    for(int i=0;i<n;i++){
+      for(int j=0;j<m;j++){
+        map[i][j] = 0;
+      }
+    }
+
+    //배추 입력
+    for(int i=0;i<k;i++){
+      int a,b;
+      cin>>a>>b;
+      map[b][a] = 1;
+    }
+    
+    vector<int> area;
+    int cabbage = 0;
+    //지도를 순회하면서 k->0
+    for(int i=0;i<n;i++){
+      for(int j=0;j<m;j++){
+        if(dfs(i,j)==true && cnt>=1){
+          cabbage ++;
+          cnt = 0;
+        }
+      }
+    }
+    //출력
+    cout<<cabbage<<"\n";
+  }
+  return 0;
+}
