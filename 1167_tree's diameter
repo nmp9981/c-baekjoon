@@ -1,0 +1,87 @@
+#include <iostream>
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int n;//정점 수
+vector<pair<int,int>> tree[100001];//트리
+int visit[100001];//각 정점방문 여부
+int diameter = 0;//지름
+int far_node = 0;//가장 먼 노드
+
+//방문기록 초기화
+void init_visit(){
+    for(int i=0;i<100001;i++){
+        visit[i] = 0;
+    }
+}
+
+//dfs
+void dfs(int node,int dist){
+    visit[node] = 1;//방문체크
+    
+    //지름,노드 갱신
+    if(diameter < dist){
+        diameter = dist;
+        far_node = node;
+    }
+    
+    //이웃탐색
+    for(int i=0;i<tree[node].size();i++){
+        int next = tree[node][i].first;//다음지점
+        int next_dist = tree[node][i].second;
+        //현재지점에서 다음지점까지의 거리
+        
+        if(visit[next]==0){//미방문
+            dfs(next,next_dist+dist);//거리 누적값
+        }
+    }
+}
+
+int main()
+{
+    cin.tie(0);
+    cout.tie(0);
+
+    //입력
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int a;
+        cin>>a;//노드입력
+        while(true){
+            int b,d;
+            cin>>b;
+            if(b==-1){//입력의 끝
+                break;
+            }
+            
+            cin>>d;
+            tree[a].push_back({b,d});//단방향 그래프
+        }
+    }
+    
+    //루트에서부터 가장 먼 정점
+    dfs(1,0);
+    
+    //초기화
+    init_visit();
+    
+    //가장 깊은 지점부터 또다른 가장 깊은 지점
+    diameter = 0;
+    dfs(far_node,0);
+    
+    //결과
+    cout<<diameter;
+    return 0;
+}
